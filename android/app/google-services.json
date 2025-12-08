@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "379541079424",
+    "firebase_url": "https://greenmessages-63ca7-default-rtdb.firebaseio.com",
+    "project_id": "greenmessages-63ca7",
+    "storage_bucket": "greenmessages-63ca7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:379541079424:android:edc8c08cbeb6f6a1142d65",
+        "android_client_info": {
+          "package_name": "com.example.green_message_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWgsiZmDHlwh5zjAkJvzKlaNtmq66WLJo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
