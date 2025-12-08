@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:green_message_app/auth/auth_gate.dart';
+import 'package:green_message_app/services/auth/auth_gate.dart';
 import 'package:green_message_app/firebase_options.dart';
 import 'package:green_message_app/themes/light_mode.dart';
 

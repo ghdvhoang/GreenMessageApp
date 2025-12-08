@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:green_message_app/auth/auth_service.dart';
+import 'package:green_message_app/services/auth/auth_service.dart';
 import 'package:green_message_app/components/my_button.dart';
 import 'package:green_message_app/components/my_textfield.dart';
 
