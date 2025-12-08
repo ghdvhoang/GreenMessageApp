@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:green_message_app/auth/auth_service.dart';
+import 'package:green_message_app/pages/settings_page.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -7,8 +9,14 @@ class MyDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
 
+    void logout() {
+      // Implement logout functionality
+      final auth = AuthService();
+      auth.signOut();
+    }
+
     return Drawer(
-      backgroundColor: color.surface,
+      backgroundColor: color.tertiary, // NỀN XANH LÁ NHẠT
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -17,10 +25,7 @@ class MyDrawer extends StatelessWidget {
             padding: EdgeInsets.all(24),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  color.primary,
-                  color.primary.withOpacity(0.7),
-                ],
+                colors: [color.primary, color.primary.withAlpha(204)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -30,11 +35,7 @@ class MyDrawer extends StatelessWidget {
                 CircleAvatar(
                   radius: 40,
                   backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.person,
-                    size: 50,
-                    color: color.primary,
-                  ),
+                  child: Icon(Icons.message, size: 50, color: color.primary),
                 ),
                 SizedBox(height: 12),
                 Text(
@@ -44,38 +45,31 @@ class MyDrawer extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
-                )
+                ),
               ],
             ),
           ),
 
           SizedBox(height: 16),
 
-          // MENU ITEMS
-          _buildTile(
-            context,
-            icon: Icons.home,
-            text: "Home",
-          ),
-          _buildTile(
-            context,
-            icon: Icons.person,
-            text: "Profile",
-          ),
+          _buildTile(context, icon: Icons.home, text: "Home"),
+          // _buildTile(context, icon: Icons.person, text: "Profile"),
           _buildTile(
             context,
             icon: Icons.settings,
             text: "Settings",
-          ),
-          _buildTile(
-            context,
-            icon: Icons.info,
-            text: "About",
+            onTap: () {
+              Navigator.of(context).pop(); // Đóng Drawer trước
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsPage()),
+              ); // Điều hướng
+            },
           ),
 
+          // _buildTile(context, icon: Icons.info, text: "About"),
           Spacer(),
 
-          // LOGOUT
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton.icon(
@@ -88,8 +82,8 @@ class MyDrawer extends StatelessWidget {
                 ),
               ),
               icon: Icon(Icons.logout),
-              label: Text("Logout"),
-              onPressed: () {},
+              label: const Text("Logout"),
+              onPressed: logout,
             ),
           ),
         ],
@@ -98,8 +92,12 @@ class MyDrawer extends StatelessWidget {
   }
 
   // Custom ListTile đẹp hơn
-  Widget _buildTile(BuildContext context,
-      {required IconData icon, required String text}) {
+  Widget _buildTile(
+    BuildContext context, {
+    required IconData icon,
+    required String text,
+    VoidCallback? onTap,
+  }) {
     final color = Theme.of(context).colorScheme;
 
     return ListTile(
@@ -112,10 +110,8 @@ class MyDrawer extends StatelessWidget {
           fontWeight: FontWeight.w500,
         ),
       ),
-      onTap: () {},
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      onTap: onTap,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
     );
   }
