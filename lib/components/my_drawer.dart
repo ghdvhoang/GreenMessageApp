@@ -53,7 +53,7 @@ class MyDrawer extends StatelessWidget {
           SizedBox(height: 16),
 
           _buildTile(context, icon: Icons.home, text: "Home"),
-          // _buildTile(context, icon: Icons.person, text: "Profile"),
+          _buildTile(context, icon: Icons.person, text: "Profile"),
           _buildTile(
             context,
             icon: Icons.settings,
