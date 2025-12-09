@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:green_message_app/components/my_drawer.dart';
 import 'package:green_message_app/components/user_tile.dart';
