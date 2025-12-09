@@ -22,7 +22,7 @@ class ChatService {
   Future<void> sendMessage(String receiverID, String message) async {
     // get current user
     final String currentUserID = _auth.currentUser!.uid;
-    final String? currentEmail = _auth.currentUser!.email;
+    //final String? currentEmail = _auth.currentUser!.email;
     final Timestamp timestamp = Timestamp.now();
     // create a new message
     Message newMessage = Message(
@@ -37,9 +37,10 @@ class ChatService {
     String chatRoomID = ids.join('_');
     // store message in firestore
     await _firestore
-        .collection('chatrooms')
+        .collection('chat_rooms')
         .doc(chatRoomID)
-        .set(newMessage.toMap());
+        .collection('messages')
+        .add(newMessage.toMap());
   }
 
   // get messages between 2 users

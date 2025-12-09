@@ -26,6 +26,8 @@ class LoginPage extends StatelessWidget {
       // Successfully signed in
     } catch (e) {
       // Handle sign-in error
+      if (!context.mounted) return;
+      
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
