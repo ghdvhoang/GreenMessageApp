@@ -14,16 +14,36 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Scaffold(
-        appBar: AppBar(title: Text('Home')),
-        drawer: MyDrawer(),
-        body: _buildUserList(),
+    final colors = Theme.of(context).colorScheme;
+
+    return Scaffold(
+      drawer: MyDrawer(),
+
+      appBar: AppBar(
+        title: Text(
+          'Chats',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: colors.onSurface,
+          ),
+        ),
+        backgroundColor: colors.surface,
+        elevation: 0,
+      ),
+
+      body: SafeArea(
+        child: Container(
+          color: colors.surface,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            child: _buildUserList(context),
+          ),
+        ),
       ),
     );
   }
 
-  Widget _buildUserList() {
+  Widget _buildUserList(BuildContext context) {
     return StreamBuilder(
       stream: _chatService.getUserStreams(),
       builder: (context, snapshot) {
@@ -58,16 +78,15 @@ class HomePage extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  ChatPage(
-                    receiverEmail: userData['email'] ?? 'No Name',
-                    receiverID: userData['uid'] ?? ''),
+              builder: (context) => ChatPage(
+                receiverEmail: userData['email'] ?? 'No Name',
+                receiverID: userData['uid'] ?? '',
+              ),
             ),
           );
         },
       );
-    }
-    else {
+    } else {
       return SizedBox.shrink();
     }
   }

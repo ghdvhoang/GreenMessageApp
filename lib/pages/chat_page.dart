@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:green_message_app/components/chat_bubble.dart';
 import 'package:green_message_app/services/auth/auth_service.dart';
 import 'package:green_message_app/services/chat/chat_service.dart';
 
@@ -27,11 +28,22 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(receiverEmail)),
+      // APPBAR
+      appBar: AppBar(
+        title: Text(
+          receiverEmail,
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
+        elevation: 1,
+        scrolledUnderElevation: 2,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+      ),
+
       body: Column(
         children: [
           Expanded(child: _buildMessagesList()),
-          // user input field
+
+          // INPUT FIELD
           _buildUserInput(context),
         ],
       ),
@@ -79,7 +91,12 @@ class ChatPage extends StatelessWidget {
         crossAxisAlignment: isCurrentUser
             ? CrossAxisAlignment.end
             : CrossAxisAlignment.start,
-        children: [Text(data['message'] ?? '')],
+        children: [
+          ChatBubble(
+            message: data['message'] ?? '',
+            isCurrentUser: isCurrentUser,
+          ),
+        ],
       ),
     );
   }
