@@ -13,16 +13,20 @@ class ChatBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    // màu bong bóng
+    // Màu bong bóng
     final bubbleColor = isCurrentUser
         ? colors.primary
-        : colors.surfaceContainerHigh;
+        : (isDarkMode
+              ? colors
+                    .surfaceContainerHighest // màu tối hơn khi dark mode
+              : colors.surfaceContainerHigh); // màu sáng khi light mode
 
-    // màu chữ
+    // Màu chữ
     final textColor = isCurrentUser
         ? colors.onPrimary
-        : colors.onSurface;
+        : (isDarkMode ? colors.onSurfaceVariant : colors.onSurface);
 
     return Container(
       margin: EdgeInsets.only(
@@ -44,20 +48,17 @@ class ChatBubble extends StatelessWidget {
             bottomRight: Radius.circular(isCurrentUser ? 4 : 16),
           ),
           boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.04),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            )
+            if (!isDarkMode)
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.04),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
           ],
         ),
         child: Text(
           message,
-          style: TextStyle(
-            color: textColor,
-            fontSize: 15,
-            height: 1.3,
-          ),
+          style: TextStyle(color: textColor, fontSize: 15, height: 1.3),
         ),
       ),
     );
