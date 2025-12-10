@@ -30,15 +30,10 @@ class ChatPage extends StatelessWidget {
       appBar: AppBar(title: Text(receiverEmail)),
       body: Column(
         children: [
-        Expanded(
-          child: _buildMessagesList()
-          ),
-          
-        // user input field
-        _buildUserInput(),
-      ],
-
-
+          Expanded(child: _buildMessagesList()),
+          // user input field
+          _buildUserInput(context),
+        ],
       ),
     );
   }
@@ -46,7 +41,7 @@ class ChatPage extends StatelessWidget {
   Widget _buildMessagesList() {
     String senderID = _authService.getCurrentUser()!.uid;
     return StreamBuilder(
-      stream: _chatService.getMessages(receiverID, senderID),
+      stream: _chatService.getMessages(senderID, receiverID),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
@@ -71,24 +66,82 @@ class ChatPage extends StatelessWidget {
   Widget _buildMessageItem(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
-    return Text(data['message'] ?? '');
+    //currnt user
+    bool isCurrentUser = data['senderID'] == _authService.getCurrentUser()!.uid;
+    //left for others
+    var alignment = isCurrentUser
+        ? Alignment.centerRight
+        : Alignment.centerLeft;
+
+    return Container(
+      alignment: alignment,
+      child: Column(
+        crossAxisAlignment: isCurrentUser
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start,
+        children: [Text(data['message'] ?? '')],
+      ),
+    );
   }
-  // build message input field
-  Widget _buildUserInput() {
-    return Row(
-      children: [
-        Expanded(
-          child: TextField(
-            controller: _messageController,
-            decoration: InputDecoration(hintText: 'Type a message'),
-            obscureText: false,
+
+  Widget _buildUserInput(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: colors.surfaceContainerLowest,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
           ),
-        ),
-        IconButton(
-          icon: Icon(Icons.send),
-          onPressed: _sendMessage,
-        ),
-      ],
+        ],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              decoration: BoxDecoration(
+                color: colors.surface,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: colors.primary.withValues(alpha: 0.20),
+                  width: 1.2,
+                ),
+              ),
+              child: TextField(
+                controller: _messageController,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Type a message...',
+                  hintStyle: TextStyle(
+                    color: colors.onSurface.withValues(alpha: 0.5),
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 10),
+
+          // Send button đẹp (circle button)
+          InkWell(
+            onTap: _sendMessage,
+            borderRadius: BorderRadius.circular(28),
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: colors.primary,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(Icons.send, color: colors.onPrimary, size: 22),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
