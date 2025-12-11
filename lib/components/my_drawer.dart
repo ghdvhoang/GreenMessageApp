@@ -10,22 +10,21 @@ class MyDrawer extends StatelessWidget {
     final color = Theme.of(context).colorScheme;
 
     void logout() {
-      // Implement logout functionality
       final auth = AuthService();
       auth.signOut();
     }
 
     return Drawer(
-      backgroundColor: color.tertiary, // NỀN XANH LÁ NHẠT
+      backgroundColor: color.surfaceContainerLow, // Hợp cả light & dark
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // HEADER
+          // HEADER (đẹp cả 2 theme)
           Container(
             padding: EdgeInsets.all(24),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [color.primary, color.primary.withAlpha(204)],
+                colors: [color.primary, color.primary.withValues(alpha: 0.7)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -35,13 +34,13 @@ class MyDrawer extends StatelessWidget {
                 CircleAvatar(
                   radius: 40,
                   backgroundColor: Colors.white,
-                  child: Icon(Icons.message, size: 50, color: color.primary),
+                  child: Icon(Icons.message, size: 48, color: color.primary),
                 ),
                 SizedBox(height: 12),
                 Text(
                   "Green Message",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: color.onPrimary,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -50,24 +49,24 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: 16),
+          SizedBox(height: 12),
 
           _buildTile(context, icon: Icons.home, text: "Home"),
           _buildTile(context, icon: Icons.person, text: "Profile"),
+
           _buildTile(
             context,
             icon: Icons.settings,
             text: "Settings",
             onTap: () {
-              Navigator.of(context).pop(); // Đóng Drawer trước
+              Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SettingsPage()),
-              ); // Điều hướng
+                MaterialPageRoute(builder: (_) => SettingsPage()),
+              );
             },
           ),
 
-          // _buildTile(context, icon: Icons.info, text: "About"),
           Spacer(),
 
           Padding(
@@ -75,14 +74,14 @@ class MyDrawer extends StatelessWidget {
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
                 backgroundColor: color.primary,
-                foregroundColor: Colors.white,
-                minimumSize: Size(double.infinity, 48),
+                foregroundColor: color.onPrimary,
+                minimumSize: Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
               icon: Icon(Icons.logout),
-              label: const Text("Logout"),
+              label: Text("Logout"),
               onPressed: logout,
             ),
           ),
@@ -91,7 +90,7 @@ class MyDrawer extends StatelessWidget {
     );
   }
 
-  // Custom ListTile đẹp hơn
+  // Custom Drawer Tile
   Widget _buildTile(
     BuildContext context, {
     required IconData icon,
@@ -105,14 +104,16 @@ class MyDrawer extends StatelessWidget {
       title: Text(
         text,
         style: TextStyle(
-          color: color.primary,
+          color: color.onSurface,
           fontSize: 16,
           fontWeight: FontWeight.w500,
         ),
       ),
       onTap: onTap,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+      hoverColor: color.primary.withValues(alpha: 0.05),
+      splashColor: color.primary.withValues(alpha: 0.1),
     );
   }
 }
