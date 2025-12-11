@@ -57,84 +57,89 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //logo
-            Icon(
-              Icons.message,
-              size: 100,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-
-            SizedBox(height: 50),
-
-            // welcome back text
-            Text(
-              'Let\'s create an account for you!',
-              style: TextStyle(
-                fontSize: 16,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-
-            SizedBox(height: 25),
-
-            // username textfield
-            MyTextField(
-              hintText: 'Email',
-              obscureText: false,
-              controller: _emailController,
-            ),
-
-            SizedBox(height: 25),
-
-            // password textfield
-            MyTextField(
-              hintText: 'Password',
-              obscureText: true,
-              controller: _pwController,
-            ),
-
-            SizedBox(height: 25),
-            // confirm password textfield
-            MyTextField(
-              hintText: 'Confirm Password',
-              obscureText: true,
-              controller: _confirmPwController,
-            ),
-
-            SizedBox(height: 25),
-
-            // sign in button
-            MyButton(text: 'Register', onTap: () => register(context)),
-
-            SizedBox(height: 25),
-            // not a member? register now
-            Row(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 75),
+          child: Center(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                //logo
+                Icon(
+                  Icons.message,
+                  size: 100,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+
+                SizedBox(height: 50),
+
+                // welcome back text
                 Text(
-                  'Already a member?',
+                  'Let\'s create an account for you!',
                   style: TextStyle(
+                    fontSize: 16,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
-                SizedBox(width: 4),
-                GestureDetector(
-                  onTap: onTap,
-                  child: Text(
-                    'Login now',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
+
+                SizedBox(height: 25),
+
+                // username textfield
+                MyTextField(
+                  hintText: 'Email',
+                  obscureText: false,
+                  controller: _emailController,
+                ),
+
+                SizedBox(height: 25),
+
+                // password textfield
+                MyTextField(
+                  hintText: 'Password',
+                  obscureText: true,
+                  controller: _pwController,
+                ),
+
+                SizedBox(height: 25),
+                // confirm password textfield
+                MyTextField(
+                  hintText: 'Confirm Password',
+                  obscureText: true,
+                  controller: _confirmPwController,
+                ),
+
+                SizedBox(height: 25),
+
+                // sign in button
+                MyButton(text: 'Register', onTap: () => register(context)),
+
+                SizedBox(height: 25),
+                // not a member? register now
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Already a member?',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
-                  ),
+                    SizedBox(width: 4),
+                    GestureDetector(
+                      onTap: onTap,
+                      child: Text(
+                        'Login now',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

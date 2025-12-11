@@ -34,7 +34,7 @@ class _ChatPageState extends State<ChatPage> {
     // add listener to focus node
     myFocusNode.addListener(() {
       if (myFocusNode.hasFocus) {
-        Future.delayed(const Duration(milliseconds: 50), () {
+        Future.delayed(const Duration(milliseconds: 500), () {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             scrollDown();
           });
@@ -77,7 +77,7 @@ class _ChatPageState extends State<ChatPage> {
 
       // call scroll down
 
-      Future.delayed(const Duration(microseconds: 100), () => scrollDown());
+      Future.delayed(const Duration(milliseconds: 500), () => scrollDown());
     }
   }
 
@@ -85,6 +85,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // APPBAR
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(
           widget.receiverEmail,
@@ -123,6 +124,7 @@ class _ChatPageState extends State<ChatPage> {
         // return list view of messages
         return ListView(
           controller: _scrollController,
+          shrinkWrap: true,
           children: snapshot.data!.docs
               .map((doc) => _buildMessageItem(doc))
               .toList(),

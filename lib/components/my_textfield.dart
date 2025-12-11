@@ -20,9 +20,20 @@ class MyTextField extends StatelessWidget {
         obscureText: obscureText,
         controller: controller,
         decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: 'Type a message...',
-          // hintStyle: TextStyle(color: colors.onSurface.withValues(alpha: 0.5)),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Theme.of(context).colorScheme.tertiary,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          fillColor: Theme.of(context).colorScheme.secondary,
+          filled: true,
+          hintText: hintText,
+          hintStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );
